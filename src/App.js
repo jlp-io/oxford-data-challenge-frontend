@@ -24,7 +24,7 @@ class App extends Component {
 
   
 componentDidMount() {
-	axios.get('http://127.0.0.1:5000/start').then(response => { 
+	axios.get('https://oxford-data-challenge-backend.herokuapp.com/start').then(response => { 
 	  this.setState({ countries: response.data.data.countries })
 	  console.log(response.data.data.countries);
       })
@@ -35,7 +35,7 @@ componentDidMount() {
 
 createChart() {
     this.setState({ isHidden: true })
-	axios.get('http://127.0.0.1:5000/getCountryData/'+this.state.selected).then(response => { 
+	axios.get('https://oxford-data-challenge-backend.herokuapp.com/getCountryData/'+this.state.selected).then(response => { 
 	  this.setState({ data: response.data.data.countryData })
 	  this.setState({ keys: response.data.data.keys })
 	  this.state.chartData = []
