@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
 import './css/bootstrap.min.css';
-import 'react-bootstrap-typeahead/css/Typeahead.css';
 import { Button, Grid, PageHeader, Form, Row, Col } from 'react-bootstrap'
 import axios from 'axios'
 import { Typeahead } from 'react-bootstrap-typeahead'
@@ -21,7 +20,6 @@ class App extends Component {
 		isHidden: false
 	  }
 	}
-
   
 componentDidMount() {
 	axios.get('https://oxford-data-challenge-backend.herokuapp.com/start').then(response => { 
@@ -31,6 +29,7 @@ componentDidMount() {
       .catch(function(error) {
         console.log(error)
       })
+    this.createChart.bind(this)
 	}
 
 createChart() {
@@ -63,18 +62,17 @@ createChart() {
 	}
 
   render() {
-	  
     return (
     <div className="App">
       <header className="App-header">
         <p>
-			Hello
+			Jamie Paterson: Our World in Data
         </p>
         <a
           className="App-link"
           href="https://reactjs.org"
         >
-          Learn React
+			diet-compositions-by-commodity-categories-fao-2017
         </a>
 		<Typeahead
           labelKey="name"
@@ -91,7 +89,6 @@ createChart() {
 		Generate Chart
         </Button>
 		<br></br>
-		{this.state.selected != "" && (
 		<LineChart
             width={1300}
             height={700}
@@ -102,7 +99,7 @@ createChart() {
             <CartesianGrid strokeDasharray="3 3" />
             <Tooltip />
             <Legend />
-            <Line type="monotone" dataKey="AlcoholicBeverages" stroke="#c94473" />
+            <Line type="monotone" dataKey="Alcoholic Beverages" stroke="#c94473" />
 		    <Line type="monotone" dataKey="CerealsAndGrains" stroke="#8884d8" />
 			<Line type="monotone" dataKey="DairyAndEggs" stroke="#c94473" />
 		    <Line type="monotone" dataKey="Pulses" stroke="#8884d8" />
@@ -114,7 +111,6 @@ createChart() {
 			<Line type="monotone" dataKey="Other" stroke="#c94473" />
 			
           </LineChart>
-		)}
       </header>
     </div>
   );
