@@ -68,12 +68,9 @@ createChart() {
         <p>
 			Jamie Paterson: Our World in Data
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-        >
+		<p>
 			diet-compositions-by-commodity-categories-fao-2017
-        </a>
+		</p>
 		<Typeahead
           labelKey="name"
           options={this.state.countries}
