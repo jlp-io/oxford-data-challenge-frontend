@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import './App.css';
+import logo from './img/24keys2.png';
+import './css/App.css';
 import './css/bootstrap.min.css';
-import { Button, Grid, PageHeader, Form, Row, Col } from 'react-bootstrap'
+import { Container, Button, Grid, PageHeader, Form, Row, Col, Image, Nav } from 'react-bootstrap'
 import axios from 'axios'
 import { Typeahead } from 'react-bootstrap-typeahead'
 import {LineChart, Line, Bar, BarChart, XAxis, YAxis, CartesianGrid, Tooltip, Area, AreaChart, Legend} from 'recharts'
@@ -29,42 +30,80 @@ componentDidMount() {
       .catch(function(error) {
         console.log(error)
       })
-    this.createChart.bind(this)
 	}
 
-createChart() {
-    this.setState({ isHidden: true })
-	axios.get('https://oxford-data-challenge-backend.herokuapp.com/getCountryData/'+this.state.selected).then(response => { 
-	  this.setState({ data: response.data.data.countryData })
-	  this.setState({ keys: response.data.data.keys })
-	  this.state.chartData = []
-	  	for (let i = 0; i < this.state.data.length; i++) {
-		this.state.chartData[i] = {
-		  count: i,
-		  AlcoholicBeverages: response.data.data.countryData[i][11],
-		  CerealsAndGrains: response.data.data.countryData[i][2],
-		  DairyAndEggs: response.data.data.countryData[i][8],
-		  Pulses: response.data.data.countryData[i][3],
-		  StarchyRoots: response.data.data.countryData[i][4],
-		  Sugar: response.data.data.countryData[i][5],
-		  OilsAndFats: response.data.data.countryData[i][6],
-		  Meat: response.data.data.countryData[i][7],
-		  FruitAndVeg: response.data.data.countryData[i][9],
-   		  Other: response.data.data.countryData[i][10],
-		  Year: response.data.data.countryData[i][1],
+	componentDidUpdate(e) {
+		if (typeof e === 'number') {
+			console.log(e)
+						this.setState({isHidden: true })
+	    	axios.get('https://oxford-data-challenge-backend.herokuapp.com/getCountryData/'+this.state.selected).then(response => { 
+			this.setState({data: response.data.data.countryData})
+			this.setState({keys: response.data.data.keys})
+		  this.state.chartData = []
+		  	for (let i = 0; i < this.state.data.length; i++) {
+			this.state.chartData[i] = {
+			  count: i,
+			  AlcoholicBeverages: response.data.data.countryData[i][11],
+			  CerealsAndGrains: response.data.data.countryData[i][2],
+			  DairyAndEggs: response.data.data.countryData[i][8],
+			  Pulses: response.data.data.countryData[i][3],
+			  StarchyRoots: response.data.data.countryData[i][4],
+			  Sugar: response.data.data.countryData[i][5],
+			  OilsAndFats: response.data.data.countryData[i][6],
+			  Meat: response.data.data.countryData[i][7],
+			  FruitAndVeg: response.data.data.countryData[i][9],
+	   		  Other: response.data.data.countryData[i][10],
+			  Year: response.data.data.countryData[i][1],
+			}
+			}
 		}
+		).catch(function(error) {
+				console.log(error)
+				})				
+
 		}
-   	  console.log(this.state.chartData)
 	}
-	).catch(function(error) {
-			console.log(error)
-			})
-	}
+
+	createChart() {
+			this.setState({isHidden: true })
+	    	axios.get('https://oxford-data-challenge-backend.herokuapp.com/getCountryData/'+this.state.selected).then(response => { 
+			this.setState({data: response.data.data.countryData})
+			this.setState({keys: response.data.data.keys})
+		  this.state.chartData = []
+		  	for (let i = 0; i < this.state.data.length; i++) {
+			this.state.chartData[i] = {
+			  count: i,
+			  AlcoholicBeverages: response.data.data.countryData[i][11],
+			  CerealsAndGrains: response.data.data.countryData[i][2],
+			  DairyAndEggs: response.data.data.countryData[i][8],
+			  Pulses: response.data.data.countryData[i][3],
+			  StarchyRoots: response.data.data.countryData[i][4],
+			  Sugar: response.data.data.countryData[i][5],
+			  OilsAndFats: response.data.data.countryData[i][6],
+			  Meat: response.data.data.countryData[i][7],
+			  FruitAndVeg: response.data.data.countryData[i][9],
+	   		  Other: response.data.data.countryData[i][10],
+			  Year: response.data.data.countryData[i][1],
+			}
+			}
+	 			this.componentDidUpdate(this.state.chartData[0]['AlcoholicBeverages'])
+		}
+		).catch(function(error) {
+				console.log(error)
+				})				
+    } 
 
   render() {
     return (
     <div className="App">
       <header className="App-header">
+      			<Container>
+      			<Row>
+      			<Col xs={2} md={2}>
+    		  	<Image src={logo} fluid />
+			  	  </Col>
+				    </Row>
+          </Container>
         <p>
 			Jamie Paterson: Our World in Data
         </p>
@@ -84,8 +123,16 @@ createChart() {
 		onClick={this.createChart.bind(this)}
 		>
 		Generate Chart
-        </Button>
-		<br></br>
+    </Button>
+    <h2>Constituencies</h2>
+		<Nav variant="pills" defaultActiveKey="" className="flex-column">
+		<Nav.Item>
+    <Nav.Link eventKey="home"onClick={this.createChart.bind(this)}>Active</Nav.Link>
+	  </Nav.Item>
+	  <Nav.Item>
+    <Nav.Link eventKey="link-1">Option 2</Nav.Link>
+	  </Nav.Item>
+		</Nav>
 		<LineChart
             width={1300}
             height={700}
